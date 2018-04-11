@@ -5,34 +5,60 @@
  */
 
 import React, { Component } from 'react';
-import {
-	Platform,
-	StyleSheet,
-	Text,
-	View
-} from 'react-native';
+import { StyleSheet, Dimensions, View } from 'react-native';
+import { GameLoop } from 'react-native-game-engine';
 
-const instructions = Platform.select({
-	ios     : 'Press Cmd+R to reload,\nCmd+D or shake for dev menu',
-	android : 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu',
-});
+const { width : WIDTH, height : HEIGHT } = Dimensions.get('window');
+const RADIUS = 25;
 
 export default class App extends Component {
-	shouldComponentUpdate = () => (false)
+	constructor() {
+		super();
+
+		this.state = {
+			x : WIDTH / 2 - RADIUS,
+			y : HEIGHT / 2 - RADIUS
+		};
+	}
+
+	shouldComponentUpdate = ({}, { x, y }) => {
+		const lastState = this.state;
+
+		return (
+			x !== lastState.x ||
+			y !== lastState.y
+		);
+	}
+
+	updateHandler = ({ touches }) => {
+		const { x, y } = this.state;
+		const move = touches.find(x => x.type === 'move');
+
+		if (move) {
+			this.setState({
+				x : x + move.delta.pageX,
+				y : y + move.delta.pageY,
+			});
+		}
+	}
 
 	render() {
+		const { x : left, y : top } = this.state;
+
 		return (
-			<View style={ styles.container }>
-				<Text style={ styles.welcome }>
-					Welcome to React Native!
-				</Text>
-				<Text style={ styles.instructions }>
-					To get started, edit App.js
-				</Text>
-				<Text style={ styles.instructions }>
-					{instructions}
-				</Text>
-			</View>
+			<GameLoop
+				style={ styles.container }
+				onUpdate={ this.updateHandler }
+			>
+				<View
+					style={ [
+						styles.player, {
+							left,
+							top,
+						}
+					] }
+				/>
+			</GameLoop>
 		);
 	}
 }
@@ -40,18 +66,13 @@ export default class App extends Component {
 const styles = StyleSheet.create({
 	container : {
 		flex            : 1,
-		justifyContent  : 'center',
-		alignItems      : 'center',
-		backgroundColor : '#F5FCFF',
+		backgroundColor : 'pink'
 	},
-	welcome : {
-		fontSize  : 20,
-		textAlign : 'center',
-		margin    : 10,
-	},
-	instructions : {
-		textAlign    : 'center',
-		color        : '#333333',
-		marginBottom : 5,
-	},
+	player : {
+		position        : 'absolute',
+		backgroundColor : 'blue',
+		width           : RADIUS * 2,
+		height          : RADIUS * 2,
+		borderRadius    : RADIUS * 2
+	}
 });
