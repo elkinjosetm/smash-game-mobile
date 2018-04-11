@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { GameLoop } from 'react-native-game-engine';
