@@ -1,0 +1,32 @@
+{
+  "name": "smash-game",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "postinstall": "rndebugger-open",
+    "start": "./node_modules/.bin/react-native start",
+    "android": "./node_modules/.bin/react-native run-android",
+    "ios": "./node_modules/.bin/react-native run-ios"
+  },
+  "dependencies": {
+    "jsx-control-statements": "^3.2.8",
+    "react": "16.3.1",
+    "react-native": "0.55.2",
+    "react-native-debugger-open": "^0.3.17"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "22.4.3",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-control-statements": "^2.2.0",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "22.4.3",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
